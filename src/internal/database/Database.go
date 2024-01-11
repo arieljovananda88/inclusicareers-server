@@ -5,7 +5,7 @@ import (
 	"os"
 	"sync"
 
-	"example.com/m/internal/models"
+	"example.com/m/src/internal/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
