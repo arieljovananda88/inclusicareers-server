@@ -5,7 +5,8 @@ import (
 	"os"
 	"sync"
 
-	"github.com/ashnchiquita/if4031-ticketing-and-reservation-services/internal/models"
+	"example.com/m/internal/models"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
