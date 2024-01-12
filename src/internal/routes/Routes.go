@@ -27,7 +27,9 @@ func InitializeRoutes() *chi.Mux {
 	r.Get("/", test_controller.Test)
 
 	// User routes
-	r.Get("/user", user_controller.CreateUser)
+	r.Post("/user", user_controller.CreateUser)
+	r.Get("/user", user_controller.GetAllUser)
+	r.Get("/tess", test_controller.Test)
 
 	return r
 
