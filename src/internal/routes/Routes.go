@@ -5,6 +5,7 @@ import (
 
 	test_controller "example.com/m/src/internal/controllers/test"
 	user_controller "example.com/m/src/internal/controllers/user"
+	auth_controller "example.com/m/src/internal/controllers/auth"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
@@ -29,7 +30,9 @@ func InitializeRoutes() *chi.Mux {
 	// User routes
 	r.Post("/user", user_controller.CreateUser)
 	r.Get("/user", user_controller.GetAllUser)
-	r.Get("/tess", test_controller.Test)
+
+	// Auth routes
+	r.Post("/login", auth_controller.Login)
 
 	return r
 
