@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	UserID      string    `gorm:"type:uuid;primaryKey"` // UUID as a string
+	UserID      string    `gorm:"type:uuid;primaryKey;default:gen_random_uuid()"` // UUID as a string
 	FullName    string    `gorm:"type:varchar(100);not null"`
 	Username    string    `gorm:"type:varchar(50);unique;not null"`
 	Email       string    `gorm:"type:varchar(100);unique;not null"`

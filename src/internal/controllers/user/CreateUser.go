@@ -18,7 +18,7 @@ type CreateUserRequest struct {
 }
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	// w.Write([]byte("Hello cr!"))
+	// w.Write([]byte("Hello crr!"))
 	var userReq CreateUserRequest
 
 	json.NewDecoder(r.Body).Decode(&userReq)
@@ -39,12 +39,18 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	// Save the newly created user
 	db := database.GetInstance()
-	db.Create(&models.User{
+	result := db.Create(&models.User{
 		FullName: userReq.FullName,
 		Username: userReq.Username,
 		Password: string(passwordHash),
 		Email:    userReq.Email,
 	})
+
+	if result.Error != nil {
+		resMsg := "Error"
+		lib.SendResponseMessage(w, resMsg, http.StatusBadRequest)
+		return
+	}
 
 	resMsg := "success"
 	lib.SendResponseMessage(w, resMsg, http.StatusCreated)
