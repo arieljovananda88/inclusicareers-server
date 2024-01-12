@@ -41,16 +41,3 @@ func GetAllUser(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(msg)
 }
-
-func CreateDummyUser(w http.ResponseWriter, r *http.Request){
-	db := database.GetInstance()
-	db.Create(&models.User{
-		FullName: "Aje Gile",
-		Username: "test",
-		Password: "test",
-		Email:    "test",
-	})
-
-	resMsg := "success"
-	lib.SendResponseMessage(w, resMsg, http.StatusCreated)
-}
