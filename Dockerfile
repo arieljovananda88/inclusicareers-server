@@ -4,7 +4,7 @@ FROM golang:alpine
 WORKDIR /usr/app
 COPY . .
 
-RUN go install github.com/cosmtrek/air@latest
+RUN go install -mod=mod github.com/githubnemo/CompileDaemon
 RUN go mod tidy
 
-CMD ["air", "./src/cmd/server/main.go", "-b", "0.0.0.0"]
+ENTRYPOINT CompileDaemon -build="go build -o m ./src/cmd/server" -command="./m"
