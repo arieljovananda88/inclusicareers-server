@@ -2,12 +2,13 @@ package auth_controller
 
 import (
 	"encoding/json"
-	"github.com/golang-jwt/jwt/v5"
-	"golang.org/x/crypto/bcrypt"
+	"fmt"
 	"net/http"
 	"os"
 	"time"
-	"fmt"
+
+	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
 
 	"example.com/m/src/internal/database"
 	"example.com/m/src/internal/lib"
@@ -21,12 +22,12 @@ type LoginRequest struct {
 
 type LoginResponse struct {
 	lib.ResponseMessage
-	Token	string
+	Token string
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	var loginReq LoginRequest
-	var user models.User
+	var user models.Users
 
 	json.NewDecoder(r.Body).Decode(&loginReq)
 

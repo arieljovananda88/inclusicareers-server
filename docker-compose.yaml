@@ -17,8 +17,6 @@ services:
       - 5436:5432
     hostname: binabisa-app-db
     env_file: .env
-    volumes:
-      - ./db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

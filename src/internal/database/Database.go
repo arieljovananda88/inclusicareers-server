@@ -5,6 +5,7 @@ import (
 	"os"
 	"sync"
 
+	"example.com/m/src/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -26,6 +27,9 @@ func initialize() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	dbInstance.AutoMigrate(&models.Users{})
+	dbInstance.AutoMigrate(&models.UserData{})
 }
 
 func GetInstance() *gorm.DB {

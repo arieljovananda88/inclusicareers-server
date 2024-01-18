@@ -4,11 +4,19 @@ import (
 	"encoding/json"
 	"net/http"
 
+	userdata_controller "example.com/m/src/internal/controllers/userData"
 	"example.com/m/src/internal/database"
 	"example.com/m/src/internal/lib"
 	"example.com/m/src/internal/models"
 	"golang.org/x/crypto/bcrypt"
 )
+
+type NewUser struct {
+	FullName string
+	Username string
+	Password string
+	Email    string
+}
 
 type CreateUserRequest struct {
 	FullName string `json:"full_name"`
@@ -22,7 +30,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var userReq CreateUserRequest
 
 	json.NewDecoder(r.Body).Decode(&userReq)
-
 	// Check for invalid request body
 	if userReq.Email == "" || userReq.Password == "" || userReq.Username == "" || userReq.FullName == "" {
 		resMsg := "invalid request"
@@ -39,15 +46,19 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	// Save the newly created user
 	db := database.GetInstance()
-	result := db.Create(&models.User{
-		FullName: userReq.FullName,
-		Username: userReq.Username,
-		Password: string(passwordHash),
-		Email:    userReq.Email,
-	})
+	newUser := models.Users{FullName: userReq.FullName, Username: userReq.Username, Password: string(passwordHash), Email: userReq.Email}
+	result := db.Create(&newUser)
 
 	if result.Error != nil {
-		resMsg := "Error"
+		resMsg := "Error while creating user"
+		lib.SendResponseMessage(w, resMsg, http.StatusBadRequest)
+		return
+	}
+
+	res := userdata_controller.CreateUserData(string(newUser.UserID))
+
+	if res != nil {
+		resMsg := "Error while creating user data"
 		lib.SendResponseMessage(w, resMsg, http.StatusBadRequest)
 		return
 	}

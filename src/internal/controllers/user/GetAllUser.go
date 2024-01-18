@@ -12,11 +12,11 @@ import (
 
 type GetAllUserResponse struct {
 	lib.ResponseMessage
-	Data []models.User
+	Data []models.Users
 }
 
 func GetAllUser(w http.ResponseWriter, r *http.Request) {
-	var users []models.User
+	var users []models.Users
 
 	// Find the user in the database
 	db := database.GetInstance()
